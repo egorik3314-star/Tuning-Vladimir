@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | AutoBodyKits</title>
+    <link rel="stylesheet" href="Static/Styles/mainstyle.css">
+    <style>
+        /* === Стили страницы Контактов === */
+        .contacts-page {
+            background: #0b0e11;
+            color: #e0e0e0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 12px 0;
+            background: rgba(22,27,34,0.95);
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .breadcrumb a { color: #e74c3c; transition: 0.2s; text-decoration: none; }
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        .breadcrumb span { color: #555; margin: 0 5px; }
+
+        /* Hero */
+        .contacts-hero {
+            height: auto;
+            min-height: 260px;
+            padding: 70px 0 40px;
+            background: linear-gradient(135deg, rgba(11,14,17,0.95), rgba(22,27,34,0.98)),
+                        radial-gradient(circle at 30% 70%, rgba(231,76,60,0.12) 0%, transparent 50%);
+            text-align: center;
+        }
+        .contacts-hero h1 { font-size: 2.4rem; color: #fff; margin-bottom: 12px; }
+        .contacts-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; }
+
+        /* Main Grid */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        /* Contact Cards */
+        .contact-card {
+            background: #161b22;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .contact-card:hover {
+            border-color: #e74c3c;
+            box-shadow: 0 12px 35px rgba(231,76,60,0.15);
+        }
+        .contact-card h3 {
+            color: #fff;
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contact-card h3 .icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(231,76,60,0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .contact-card p, .contact-card li {
+            color: rgba(255,255,255,0.75);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .contact-card ul { list-style: none; padding: 0; margin: 0; }
+        .contact-card a {
+            color: #e74c3c;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .contact-card a:hover { color: #fff; text-decoration: underline; }
+
+        /* Messenger Buttons */
+        .messenger-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .btn-messenger {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .btn-messenger.wa {
+            background: rgba(37,211,102,0.15);
+            border-color: #25D366;
+            color: #25D366;
+        }
+        .btn-messenger.wa:hover {
+            background: #25D366;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37,211,102,0.3);
+        }
+        .btn-messenger.tg {
+            background: rgba(0,136,204,0.15);
+            border-color: #0088cc;
+            color: #0088cc;
+        }
+        .btn-messenger.tg:hover {
+            background: #0088cc;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,136,204,0.3);
+        }
+        .btn-messenger.call {
+            background: rgba(231,76,60,0.15);
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+        .btn-messenger.call:hover {
+            background: #e74c3c;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(231,76,60,0.3);
+        }
+
+        /* Map Placeholder */
+        .map-container {
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .map-placeholder {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            padding: 20px;
+        }
+        .map-placeholder .pin {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .map-placeholder strong { color: #fff; display: block; margin: 8px 0 4px; }
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+        .map-link:hover { color: #fff; }
+
+        /* Working Hours Badge */
+        .hours-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37,211,102,0.15);
+            color: #25D366;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        .hours-badge.offline {
+            background: rgba(231,76,60,0.15);
+            color: #e74c3c;
+        }
+
+        /* Quick Form */
+        .quick-form {
+            background: #161b22;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 25px;
+        }
+        .quick-form h3 {
+            color: #fff;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .form-control {
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: #fff;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #e74c3c;
+            background: rgba(255,255,255,0.12);
+        }
+        .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        textarea.form-control { min-height: 100px; resize: vertical; }
+        .btn-submit {
+            width: 100%;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-submit:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231,76,60,0.4);
+        }
+        .form-note {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* FAQ Accordion */
+        .faq-section { padding: 20px 0 60px; }
+        .faq-item {
+            background: #161b22;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .faq-question:hover { background: rgba(255,255,255,0.03); }
+        .faq-question::after {
+            content: "+";
+            font-size: 20px;
+            color: #e74c3c;
+            transition: 0.3s;
+        }
+        .faq-item.active .faq-question::after { content: "−"; }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 20px 16px;
+        }
+
+        /* Legal / Requisites */
+        .requisites {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        .requisites strong { color: rgba(255,255,255,0.85); }
+
+        /* Mobile */
+        @media (max-width: 992px) {
+            .contacts-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .contacts-hero h1 { font-size: 1.9rem; }
+            .contacts-hero p { font-size: 1rem; }
+            .messenger-group { flex-direction: column; }
+            .btn-messenger { width: 100%; justify-content: center; }
+            .map-container { height: 280px; }
+        }
+        @media (max-width: 480px) {
+            .contact-card, .quick-form { padding: 20px; }
+            .faq-question { padding: 14px 16px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body class="contacts-page">
+
+    <!-- Header -->
+    <header>
+        <div class="container header-wrap">
+            <div class="logo">Auto<span>Body</span>Kits</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="Catalog.html">Каталог</a></li>
+                    <li><a href="Services.html">Услуги</a></li>
+                    <li><a href="Delivery.html">Доставка</a></li>
+                    <li><a href="index.html#request-form">Заявка</a></li>
+                    <li><a href="Contacts.html" class="active">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="header-contacts">
+                <a href="tel:+79990000000" class="phone">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Главная</a> <span>/</span> <strong>Контакты</strong>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero contacts-hero">
+        <div class="container">
+            <h1>Свяжитесь с нами</h1>
+            <p>Ответим на все вопросы по подбору, доставке и установке обвесов. Работаем ежедневно.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="container">
+        <div class="contacts-grid">
+            
+            <!-- Left Column: Contact Info -->
+            <div>
+                <!-- Phone & Messengers -->
+                <div class="contact-card">
+                    <h3><span class="icon">📞</span> Связаться с менеджером</h3>
+                    <p>Консультация, подбор обвеса, уточнение наличия и сроков — бесплатно и без обязательств.</p>
+                    <div class="messenger-group">
+                        <a href="tel:+79990000000" class="btn-messenger call">📱 Позвонить</a>
+                        <a href="https://wa.me/79990000000" class="btn-messenger wa" target="_blank">💬 WhatsApp</a>
+                        <a href="https://t.me/username" class="btn-messenger tg" target="_blank">✈️ Telegram</a>
+                    </div>
+                    <div class="hours-badge">✓ Работаем ежедневно: 9:00 — 20:00 (МСК)</div>
+                </div>
+
+                <!-- Address & Pickup -->
+                <div class="contact-card">
+                    <h3><span class="icon">📍</span> Адрес и самовывоз</h3>
+                    <p><strong>Склад и сервисный центр:</strong><br>
+                    г. Владимир, ул. Автомобильная, д. 12, стр. 3</p>
+                    <p><strong>Самовывоз:</strong> ежедневно 10:00 — 19:00, без обеда и выходных.</p>
+                    <p><strong>Парковка:</strong> бесплатная, есть место для разгрузки.</p>
+                    <a href="https://yandex.ru/maps/?text=Владимир,ул.Автомобильная,12" class="map-link" target="_blank">
+                        🗺️ Открыть в Яндекс.Картах →
+                    </a>
+                </div>
+
+                <!-- Map Placeholder -->
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <span class="pin">📍</span>
+                        <strong>г. Владимир, ул. Автомобильная, 12</strong>
+                        <p>Склад AutoBodyKits<br>Сервисный центр</p>
+                        <a href="https://yandex.ru/maps/?text=Владимир,ул.Автомобильная,12" class="map-link" target="_blank">
+                            Построить маршрут →
+                        </a>
+                    </div>
+                    <!-- 
+                    💡 Для реальной карты:
+                    1. Зарегистрируйтесь в Яндекс.Картах для разработчиков
+                    2. Получите API-ключ
+                    3. Замените этот блок на iframe с конструктора карт
+                    -->
+                </div>
+
+                <!-- Requisites -->
+                <div class="requisites">
+                    <p><strong>Реквизиты для юридических лиц:</strong></p>
+                    <p>ИП Петров А.С.<br>
+                    ИНН 333312345678 • ОГРНИП 123456789012345<br>
+                    Р/с 40802810100000012345 в ПАО «Сбербанк»<br>
+                    Кор/с 30101810400000000225 • БИК 044525225</p>
+                    <p style="margin-top: 10px; font-size: 12px;">
+                        Договор оферты и акт сверки высылаем по запросу.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Column: Quick Form + FAQ -->
+            <div>
+                <!-- Quick Request Form -->
+                <div class="quick-form">
+                    <h3><span class="icon">✉️</span> Быстрый запрос</h3>
+                    <form id="contactForm" onsubmit="sendForm(event)">
+                        <div class="form-group">
+                            <label for="name">Ваше имя *</label>
+                            <input type="text" id="name" class="form-control" placeholder="Иван" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Телефон или @ник в ТГ *</label>
+                            <input type="text" id="contact" class="form-control" placeholder="+7 ___ или @username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Ваш вопрос или пожелание</label>
+                            <textarea id="message" class="form-control" placeholder="Например: нужен обвес на BMW 3 G20, интересует покраска в цвет..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            📤 Отправить запрос
+                        </button>
+                        <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                    </form>
+                </div>
+
+                <!-- FAQ -->
+                <div class="faq-section">
+                    <h3 style="color: #fff; margin-bottom: 15px;">Частые вопросы</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Как быстро вы отвечаете?</div>
+                        <div class="faq-answer">
+                            Обычно в течение 15–30 минут в рабочее время (9:00–20:00 МСК). В выходные и вечером — до 1 часа.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Можно ли приехать без записи?</div>
+                        <div class="faq-answer">
+                            Да, самовывоз доступен ежедневно. Но для установки обвеса рекомендуем записаться заранее — так мы зарезервируем время и подготовим детали.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Работаете ли вы с юрлицами?</div>
+                        <div class="faq-answer">
+                            Да, работаем с НДС и без. Высылаем полный пакет документов: договор, счёт, акт, УПД. Для оптовых заказов — индивидуальные условия.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Что если обвес повредится при доставке?</div>
+                        <div class="faq-answer">
+                            Все грузы застрахованы. При повреждении составьте акт в ТК, пришлите фото нам — заменим деталь за свой счёт в кратчайшие сроки.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts">
+        <div class="container">
+            <h3>AutoBodyKits</h3>
+            <p>Аэродинамические обвесы • Покраска • Установка • Гарантия</p>
+            <br>
+            <div class="header-contacts" style="justify-content: center;">
+                <a href="tel:+79990000000" class="phone" style="color: white;">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+            <br><br>
+            <p>&copy; 2023 AutoBodyKits. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form Submit Handler (демо)
+        function sendForm(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+            const message = document.getElementById('message').value;
+            
+            // Формируем сообщение для WhatsApp
+            const text = `Новая заявка с сайта:\n👤 Имя: ${name}\n📞 Контакт: ${contact}\n💬 Сообщение: ${message || '—'}`;
+            const waLink = `https://wa.me/79990000000?text=${encodeURIComponent(text)}`;
+            
+            // Открываем WhatsApp
+            window.open(waLink, '_blank');
+            
+            // Очищаем форму и показываем сообщение
+            document.getElementById('contactForm').reset();
+            alert('✅ Спасибо! Мы перенаправили вас в WhatsApp. Если окно не открылось — напишите нам вручную по ссылке в шапке сайта.');
+        }
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги по обвесам | AutoBodyKits</title>
+    <link rel="stylesheet" href="Static/Styles/mainstyle.css">
+    <style>
+        /* === Стили специально для страницы Услуг === */
+        .services-page {
+            background: var(--bg);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 12px 0;
+            background: rgba(22,27,34,0.95);
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .breadcrumb a { color: #e74c3c; transition: 0.2s; }
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        .breadcrumb span { color: #666; margin: 0 5px; }
+
+        /* Hero Section */
+        .services-hero {
+            height: auto;
+            min-height: 320px;
+            padding: 80px 0 50px;
+            background: linear-gradient(135deg, rgba(11,14,17,0.95), rgba(22,27,34,0.98)), 
+                        radial-gradient(circle at 20% 80%, rgba(231,76,60,0.15) 0%, transparent 50%);
+            text-align: center;
+        }
+        .services-hero h1 {
+            font-size: 2.6rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .services-hero p {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Detailed Services Grid */
+        .services-detailed {
+            padding: 60px 0;
+        }
+        .services-detailed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+        .service-detailed-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-detailed-card:hover {
+            transform: translateY(-6px);
+            border-color: #e74c3c;
+            box-shadow: 0 20px 50px rgba(231, 76, 60, 0.2);
+        }
+        .service-detailed-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #e74c3c;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .service-detailed-card:hover::before { opacity: 1; }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .service-icon-box {
+            width: 56px;
+            height: 56px;
+            background: rgba(231,76,60,0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        .service-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin: 0;
+            line-height: 1.3;
+        }
+        .service-short {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .service-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .feature-tag {
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.85);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .service-details {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .service-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .service-details ul li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .service-details ul li:last-child { border-bottom: none; }
+        .service-details ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .service-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .service-meta {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+        .service-meta strong { color: #fff; display: block; margin-bottom: 2px; }
+        .btn-service {
+            background: transparent;
+            border: 2px solid #e74c3c;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+        .btn-service:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(231,76,60,0.3);
+        }
+
+        /* Process / How We Work */
+        .process-section {
+            background: linear-gradient(180deg, var(--card-bg), var(--bg));
+            padding: 70px 0;
+        }
+        .section-title-light { text-align: center; color: #fff; margin-bottom: 50px; font-size: 2rem; }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            position: relative;
+        }
+        .step-card {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        .step-number {
+            width: 45px;
+            height: 45px;
+            background: #e74c3c;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 15px rgba(231,76,60,0.3);
+        }
+        .step-title { color: #fff; font-size: 1.1rem; margin-bottom: 8px; }
+        .step-desc { color: rgba(255,255,255,0.65); font-size: 0.9rem; line-height: 1.5; }
+
+        /* Info Banner */
+        .info-banner {
+            background: rgba(231,76,60,0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .info-banner-icon { font-size: 2rem; min-width: 40px; }
+        .info-banner h4 { color: #fff; margin: 0 0 5px; }
+        .info-banner p { color: rgba(255,255,255,0.8); margin: 0; font-size: 0.95rem; }
+
+        /* Mobile */
+        @media (max-width: 992px) {
+            .services-detailed-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .services-hero h1 { font-size: 2rem; }
+            .services-hero p { font-size: 1rem; }
+            .service-detailed-card { padding: 20px; }
+            .service-footer { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .btn-service { width: 100%; text-align: center; }
+            .process-steps { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .process-steps { grid-template-columns: 1fr; }
+            .info-banner { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body class="services-page">
+
+    <!-- Header -->
+    <header>
+        <div class="container header-wrap">
+            <div class="logo">Auto<span>Body</span>Kits</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="Catalog.html">Каталог</a></li>
+                    <li><a href="Services.html" class="active">Услуги</a></li>
+                    <li><a href="Delivery.html">Доставка</a></li>
+                    <li><a href="index.html#request-form">Заявка</a></li>
+                    <li><a href="Contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="header-contacts">
+                <a href="tel:+79990000000" class="phone">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Главная</a> <span>/</span> <strong>Услуги</strong>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero services-hero">
+        <div class="container">
+            <h1>Профессиональные услуги для вашего авто</h1>
+            <p>Полный цикл работ: от индивидуального подбора и изготовления до покраски и точной установки. Работаем с гарантией и официальными договором.</p>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="services-detailed">
+        <div class="container">
+            <div class="services-detailed-grid">
+                
+                <!-- 1. Подбор обвесов -->
+                <div class="service-detailed-card">
+                    <div class="service-header">
+                        <div class="service-icon-box">🔍</div>
+                        <h2 class="service-title">Подбор обвесов</h2>
+                    </div>
+                    <p class="service-short">Индивидуальная консультация и точный подбор комплекта под вашу комплектацию, год выпуска и стиль вождения.</p>
+                    <div class="service-features">
+                        <span class="feature-tag">Бесплатно при заказе</span>
+                        <span class="feature-tag">По VIN и году</span>
+                        <span class="feature-tag">3D-визуализация</span>
+                    </div>
+                    <div class="service-details">
+                        <ul>
+                            <li>Анализ заводской комплектации и штатных креплений</li>
+                            <li>Проверка совместимости с парктрониками, камерами, адаптивным круизом</li>
+                            <li>Подбор стиля: OEM+, M-Performance, HAMANN, LIBERTY WALK и др.</li>
+                            <li>Расчёт итоговой стоимости с учётом доставки и установки</li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <div class="service-meta"><strong>Срок:</strong> 15-30 минут онлайн</div>
+                        <button class="btn-service" onclick="orderService('Подбор обвесов')">Заказать подбор</button>
+                    </div>
+                </div>
+
+                <!-- 2. Изготовление обвесов -->
+                <div class="service-detailed-card">
+                    <div class="service-header">
+                        <div class="service-icon-box">🛠️</div>
+                        <h2 class="service-title">Изготовление обвесов</h2>
+                    </div>
+                    <p class="service-short">Разработка и производство кастомных аэродинамических элементов для нестандартных авто или уникальных проектов.</p>
+                    <div class="service-features">
+                        <span class="feature-tag">3D-сканирование</span>
+                        <span class="feature-tag">Стеклопластик / Карбон</span>
+                        <span class="feature-tag">Любая геометрия</span>
+                    </div>
+                    <div class="service-details">
+                        <ul>
+                            <li>Выезд мастера для 3D-сканирования кузова</li>
+                            <li>Моделирование в CAD и согласование макета</li>
+                            <li>Ручная формовка или ЧПУ-фрезеровка матриц</li>
+                            <li>Контроль толщины стенок и геометрии на каждом этапе</li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <div class="service-meta"><strong>Срок:</strong> от 14 рабочих дней</div>
+                        <button class="btn-service" onclick="orderService('Изготовление обвеса')">Обсудить проект</button>
+                    </div>
+                </div>
+
+                <!-- 3. Покраска обвесов -->
+                <div class="service-detailed-card">
+                    <div class="service-header">
+                        <div class="service-icon-box">🎨</div>
+                        <h2 class="service-title">Покраска обвесов</h2>
+                    </div>
+                    <p class="service-short">Профессиональная окраска в цвет кузова с подбором кода краски по VIN. Работаем в сертифицированной камере.</p>
+                    <div class="service-features">
+                        <span class="feature-tag">Подбор по VIN</span>
+                        <span class="feature-tag">Камерная сушка</span>
+                        <span class="feature-tag">Гарантия 24 мес</span>
+                    </div>
+                    <div class="service-details">
+                        <ul>
+                            <li>Точный колер-подбор по заводскому коду краски BMW/VAG и др.</li>
+                            <li>Полный цикл: шлифовка → грунт → база → лак → полировка</li>
+                            <li>Использование премиальных материалов (Mobihel, Sikkens, Axalta)</li>
+                            <li>Контроль цвета при дневном и искусственном освещении</li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <div class="service-meta"><strong>Срок:</strong> 2-4 дня</div>
+                        <button class="btn-service" onclick="orderService('Покраска обвеса')">Рассчитать стоимость</button>
+                    </div>
+                </div>
+
+                <!-- 4. Установка обвесов -->
+                <div class="service-detailed-card">
+                    <div class="service-header">
+                        <div class="service-icon-box">🔧</div>
+                        <h2 class="service-title">Установка обвесов</h2>
+                    </div>
+                    <p class="service-short">Профессиональный монтаж на штатные или усиленные крепления. Сохранение герметичности и заводских зазоров.</p>
+                    <div class="service-features">
+                        <span class="feature-tag">Сервисный центр</span>
+                        <span class="feature-tag">Гарантия на работу</span>
+                        <span class="feature-tag">Сохранение ЛКП</span>
+                    </div>
+                    <div class="service-details">
+                        <ul>
+                            <li>Демонтаж штатных элементов без повреждения ЛКП</li>
+                            <li>Подгонка зазоров, сверление технологических отверстий</li>
+                            <li>Герметизация стыков автомобильным герметиком и шумоизоляцией</li>
+                            <li>Финальная проверка крепления, тест-драйв, фото-отчёт</li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <div class="service-meta"><strong>Срок:</strong> 1-3 дня</div>
+                        <button class="btn-service" onclick="orderService('Установка обвеса')">Записаться на монтаж</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-banner">
+                <div class="info-banner-icon">📋</div>
+                <div class="info-banner">
+                    <h4>Важно</h4>
+                    <p>Указанные сроки являются ориентировочными. Точная стоимость рассчитывается после осмотра автомобиля, учёта комплектации и выбранного стиля обвеса. Консультация бесплатна.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="section-title-light">Как мы работаем</h2>
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Заявка</h3>
+                    <p class="step-desc">Вы пишете нам, указываете модель, год и VIN. Мы отвечаем в течение 15 минут.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Подбор / Расчёт</h3>
+                    <p class="step-desc">Подбираем комплект, рассчитываем стоимость с доставкой и установкой.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Оплата</h3>
+                    <p class="step-desc">100% предоплата. Принимаем карты, СБП, наличные. Выставляем чек.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Изготовление / Покраска</h3>
+                    <p class="step-desc">Готовим детали, красим, сушим в камере. Контроль качества на каждом этапе.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Установка / Отправка</h3>
+                    <p class="step-desc">Монтаж в нашем центре или бережная упаковка и отправка ТК с трекингом.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Delivery & Payment -->
+    <section id="delivery" class="section info-block">
+        <div class="container">
+            <h2 class="section-title" style="color:white;">Оплата и Доставка</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Как оплатить?</h3>
+                    <ul>
+                        <li><strong>Карта:</strong> Сбербанк, Тинькофф, Альфа-Банк</li>
+                        <li><strong>СБП:</strong> Мгновенный перевод по QR/номеру</li>
+                        <li><strong>Наличные:</strong> При самовывозе или в сервисе</li>
+                        <li><strong>Гарантия:</strong> Чек + Акт выполненных работ</li>
+                    </ul>
+                </div>
+                <div class="info-item">
+                    <h3>Условия доставки и монтажа</h3>
+                    <ul>
+                        <li><strong>Самовывоз:</strong> г. Владимир, ул. Автомобильная, 12</li>
+                        <li><strong>ТК:</strong> СДЭК, Деловые Линии, ПЭК (от 1-3 дней)</li>
+                        <li><strong>Упаковка:</strong> Пенофол + картон + стрейч-плёнка</li>
+                        <li><strong>Страхование:</strong> Все грузы застрахованы на полную стоимость</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts">
+        <div class="container">
+            <h3>Остались вопросы?</h3>
+            <p>Напишите нам прямо сейчас. Подберём обвес, рассчитаем стоимость и запишем на установку.</p>
+            <br>
+            <div class="header-contacts" style="justify-content: center;">
+                <a href="tel:+79990000000" class="phone" style="color: white;">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+            <br><br>
+            <p>&copy; 2023 AutoBodyKits. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Функция заказа услуги через WhatsApp
+        function orderService(serviceName) {
+            const message = `Здравствуйте! Меня интересует услуга: "${serviceName}".\n\nМодель авто: _______\nГод выпуска: _______\nVIN (если есть): _______\n\nЖду расчёт и сроки.`;
+            const waLink = `https://wa.me/79990000000?text=${encodeURIComponent(message)}`;
+            window.open(waLink, '_blank');
+        }
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обвесы для LADA | AutoBodyKits</title>
+    <link rel="stylesheet" href="Static/Styles/mainstyle.css">
+    <style>
+        /* Стили для страницы бренда — ИДЕНТИЧНЫ BMW */
+        .brand-page .hero {
+            height: auto;
+            min-height: 350px;
+            padding: 90px 0 60px;
+            background: linear-gradient(135deg, rgba(11,14,17,0.95), rgba(22,27,34,0.98)), 
+                        url('Static/images/lada-bg.jpg') center/cover no-repeat;
+            position: relative;
+        }
+        .brand-page .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at bottom, rgba(231,76,60,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .brand-page .hero-video { display: none; }
+        .brand-page .hero-content { text-align: center; position: relative; z-index: 2; }
+        .brand-page .hero h1 { 
+            font-size: 2.8rem; 
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: block;
+        }
+        .brand-page .hero p { 
+            font-size: 1.15rem; 
+            max-width: 650px; 
+            margin: 0 auto 25px;
+            color: rgba(255,255,255,0.9);
+        }
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(231,76,60,0.2);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 12px 0;
+            background: rgba(22,27,34,0.95);
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .breadcrumb a { color: #e74c3c; transition: 0.2s; }
+        .breadcrumb a:hover { color: #fff; }
+        .breadcrumb span { color: #666; }
+        
+        /* Filters Panel */
+        .filters-panel {
+            background: var(--card-bg);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 15px;
+            border-right: 1px solid rgba(255,255,255,0.15);
+        }
+        .filter-group:last-child { border-right: none; }
+        .filter-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        /* === FIX: Тёмный выпадающий список для фильтров === */
+        .filter-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: rgba(255,255,255,0.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center / 12px;
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 35px 8px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 140px;
+            transition: 0.2s;
+        }
+        .filter-select:hover, 
+        .filter-select:focus {
+            border-color: #e74c3c;
+            outline: none;
+            background-color: rgba(255,255,255,0.15);
+        }
+        .filter-select option {
+            background-color: #1a1a2e !important;
+            color: #ffffff !important;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .filter-select option:checked {
+            background-color: #e74c3c !important;
+            color: #fff !important;
+        }
+        .filter-select option:hover {
+            background-color: #e74c3c !important;
+            color: #fff !important;
+        }
+        @-moz-document url-prefix() {
+            .filter-select {
+                text-indent: 0.01px;
+                text-overflow: '';
+            }
+            .filter-select option {
+                background-color: #161b22 !important;
+                color: #fff !important;
+            }
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            .filter-select option {
+                background-color: #161b22 !important;
+                color: #ffffff !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .filter-select {
+                min-width: 120px;
+                padding: 7px 32px 7px 12px;
+                font-size: 13px;
+            }
+        }
+        .filter-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            transform: translateY(-1px);
+        }
+        .filter-btn.active {
+            box-shadow: 0 4px 12px rgba(231,76,60,0.4);
+        }
+        .results-count {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-left: auto;
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.35s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: #e74c3c;
+            box-shadow: 0 20px 50px rgba(231, 76, 60, 0.25);
+        }
+        .product-card.new::before {
+            content: "NEW";
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #e74c3c;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+        .product-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+        .product-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-model {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .product-name {
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .product-desc {
+            color: rgba(255,255,255,0.65);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+        .feature-tag {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.85);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .product-price span {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            font-weight: normal;
+        }
+        .btn-order {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-order:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231,76,60,0.4);
+        }
+        .btn-order:active { transform: translateY(0); }
+        
+        /* Empty state */
+        .products-empty {
+            text-align: center;
+            padding: 80px 20px;
+            color: rgba(255,255,255,0.6);
+            display: none;
+        }
+        .products-empty.show { display: block; }
+        .products-empty h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        
+        /* Info Banner */
+        .info-banner {
+            background: linear-gradient(135deg, #c0392b, rgba(232, 74, 56, 0.645));
+            border: 1px solid rgba(231,76,60,0.3);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .info-banner-icon {
+            font-size: 2.5rem;
+            min-width: 50px;
+        }
+        .info-banner-text h4 {
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        .info-banner-text p {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 50px auto 0;
+            width: fit-content;
+            max-width: 100%;
+            background: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .page-btn {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #d0d0d0;
+            font-weight: 500;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .page-btn:hover:not(.disabled):not(.active) {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .page-btn.active {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+            transform: translateY(0);
+        }
+        .page-btn.active:hover {
+            background: #c0392b;
+            border-color: #c0392b;
+        }
+        .page-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: #888;
+            transform: none !important;
+        }
+        @media (max-width: 480px) {
+            .pagination { gap: 6px; padding: 12px 15px; }
+            .page-btn { width: 36px; height: 36px; font-size: 13px; }
+        }
+                
+        /* Mobile */
+        @media (max-width: 992px) {
+            .filters-container { gap: 10px; }
+            .filter-group { padding: 0 10px; border-right-width: 0.5px; }
+            .filter-select { min-width: 120px; padding: 7px 12px; font-size: 13px; }
+            .filter-btn { padding: 7px 15px; font-size: 13px; }
+            .results-count { width: 100%; text-align: center; margin: 10px 0 0; }
+        }
+        @media (max-width: 768px) {
+            .brand-page .hero h1 { font-size: 2rem; flex-wrap: wrap; }
+            .brand-page .hero p { font-size: 1rem; }
+            .filters-panel { position: relative; top: 0; padding: 12px 0; }
+            .filters-container { flex-direction: column; align-items: stretch; }
+            .filter-group { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0; justify-content: space-between; }
+            .filter-select { min-width: auto; flex-grow: 1; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+            .product-image { height: 180px; }
+            .info-banner { flex-direction: column; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .brand-page .hero { min-height: 300px; padding: 70px 0 40px; }
+            .brand-page .hero h1 { font-size: 1.7rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .product-footer { flex-direction: column; gap: 12px; align-items: stretch; }
+            .btn-order { justify-content: center; }
+            .pagination { gap: 5px; }
+            .page-btn { width: 36px; height: 36px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body class="brand-page">
+
+    <!-- Header -->
+    <header>
+        <div class="container header-wrap">
+            <div class="logo">Auto<span>Body</span>Kits</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="Catalog.html" class="active">Каталог</a></li>
+                    <li><a href="Services.html">Услуги</a></li>
+                    <li><a href="Delivery.html">Доставка</a></li>
+                    <li><a href="index.html#request-form">Заявка</a></li>
+                    <li><a href="Contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="header-contacts">
+                <a href="tel:+79990000000" class="phone">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Главная</a> <span> / </span> 
+            <a href="Catalog.html">Каталог</a> <span> / </span> 
+            <strong>LADA</strong>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>
+                <img class="brand-logo" src="Static/images/lada logo.jpg" alt="LADA">
+                Аэродинамические обвесы
+            </h1>
+            <p>Стильные и надёжные комплекты для всех популярных моделей LADA. Покраска в цвет кузова и профессиональная установка.</p>
+            <span class="brand-badge">✓ 28 моделей в наличии</span>
+        </div>
+    </section>
+
+    <!-- Filters Panel -->
+    <div class="filters-panel">
+        <div class="container filters-container">
+            <div class="filter-group">
+                <span class="filter-label">Модель:</span>
+                <select class="filter-select" id="modelFilter">
+                    <option value="all">Все модели</option>
+                    <option value="vesta">Vesta (2015-н.в.)</option>
+                    <option value="granta">Granta (2011-н.в.)</option>
+                    <option value="largus">Largus (2012-н.в.)</option>
+                    <option value="niva">Niva / 4x4 (1977-н.в.)</option>
+                    <option value="xray">XRAY (2016-2022)</option>
+                    <option value="priora">Priora (2007-2018)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Тип:</span>
+                <select class="filter-select" id="typeFilter">
+                    <option value="all">Все типы</option>
+                    <option value="front">Передний бампер</option>
+                    <option value="rear">Задний бампер</option>
+                    <option value="skirts">Пороги</option>
+                    <option value="spoiler">Спойлер</option>
+                    <option value="diffuser">Диффузор</option>
+                    <option value="full">Полный комплект</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-sort="popular">Популярные</button>
+                <button class="filter-btn" data-sort="new">Новинки</button>
+                <button class="filter-btn" data-sort="price-asc">Цена: низкая</button>
+                <button class="filter-btn" data-sort="price-desc">Цена: высокая</button>
+            </div>
+            <span class="results-count">Найдено: <strong id="resultsCount">12</strong> товаров</span>
+        </div>
+    </div>
+
+    <!-- Info Banner -->
+    <div class="container">
+        <div class="info-banner">
+            <div class="info-banner-icon">🎨</div>
+            <div class="info-banner-text">
+                <h4>Бесплатная консультация по подбору</h4>
+                <p>Не уверены, какой обвес подойдёт? Напишите нам — поможем выбрать под вашу комплектацию и год выпуска LADA.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <section class="section">
+        <div class="container">
+            
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                
+                <!-- Product 1: Vesta Full Kit -->
+                <div class="product-card new" data-model="vesta" data-type="full" data-price="32000" data-popular="1">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=600&q=80" alt="Обвес на LADA Vesta" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Vesta'">
+                        <span class="product-badge">Полный комплект</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Vesta • FL (2019-н.в.)</div>
+                        <h3 class="product-name">Аэродинамический обвес "Sport Line"</h3>
+                        <p class="product-desc">Комплект: передний/задний бампер, пороги, спойлер. Материал: стеклопластик/ABS.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Под покраску</span>
+                            <span class="feature-tag">Гарантия 12 мес</span>
+                            <span class="feature-tag">ОЕМ-крепления</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">32 000 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Vesta FL Sport Line', 32000)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: Granta Front Bumper -->
+                <div class="product-card" data-model="granta" data-type="front" data-price="12500" data-popular="1">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80" alt="Бампер на LADA Granta" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Granta'">
+                        <span class="product-badge">Передний бампер</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Granta • I / II (2011-н.в.)</div>
+                        <h3 class="product-name">Спортивный передний бампер "Rally Style"</h3>
+                        <p class="product-desc">Стилизация под раллийные версии. Совместим с ПТФ и штатными креплениями.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Под ПТФ</span>
+                            <span class="feature-tag">Усиленный</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">12 500 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Granta Front Rally', 12500)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3: Niva 4x4 Full Kit -->
+                <div class="product-card new" data-model="niva" data-type="full" data-price="45000" data-popular="1">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1533473429026-8931b27c5c7f?auto=format&fit=crop&w=600&q=80" alt="Обвес на LADA Niva" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Niva'">
+                        <span class="product-badge">Полный комплект</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Niva / 4x4 • (1977-н.в.)</div>
+                        <h3 class="product-name">Внедорожный обвес "Offroad Pro" (4 предмета)</h3>
+                        <p class="product-desc">Защита бамперов, расширенные арки, пороги. Усиленная конструкция для бездорожья.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">ABS-пластик</span>
+                            <span class="feature-tag">Под покраску</span>
+                            <span class="feature-tag">Гарантия</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">45 000 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Niva Offroad Pro', 45000)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4: Vesta Spoiler -->
+                <div class="product-card" data-model="vesta" data-type="spoiler" data-price="6900" data-popular="0">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80" alt="Спойлер LADA Vesta" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Spoiler'">
+                        <span class="product-badge">Спойлер</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Vesta • (2015-н.в.)</div>
+                        <h3 class="product-name">Спойлер на крышку багажника "Lip Style"</h3>
+                        <p class="product-desc">Минималистичный дизайн в стиле тюнинг-ателье. Крепление на 3М-скотч + саморезы (опционально).</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Карбон-эффект</span>
+                            <span class="feature-tag">Лёгкий</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">6 900 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Vesta Lip Spoiler', 6900)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5: XRAY Skirts -->
+                <div class="product-card" data-model="xray" data-type="skirts" data-price="9500" data-popular="0">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=600&q=80" alt="Пороги LADA XRAY" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+XRAY'">
+                        <span class="product-badge">Пороги</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">XRAY • (2016-2022)</div>
+                        <h3 class="product-name">Боковые пороги "Cross Style" (комплект)</h3>
+                        <p class="product-desc">Визуально расширяют кузов, придают внедорожный вид. Материал: стеклопластик.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Под покраску</span>
+                            <span class="feature-tag">Комплект 2 шт</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">9 500 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA XRAY Cross Skirts', 9500)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6: Priora Diffuser -->
+                <div class="product-card" data-model="priora" data-type="diffuser" data-price="14000" data-popular="1">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Диффузор LADA Priora" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Diffuser'">
+                        <span class="product-badge">Диффузор</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Priora • (2007-2018)</div>
+                        <h3 class="product-name">Задний диффузор "Sport Look"</h3>
+                        <p class="product-desc">Агрессивный дизайн с имитацией карбона. Под 2 выхлопные трубы. Улучшает аэродинамику.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Карбон-винил</span>
+                            <span class="feature-tag">Под 2 трубы</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">14 000 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Priora Sport Diffuser', 14000)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7: Largus Rear Bumper -->
+                <div class="product-card" data-model="largus" data-type="rear" data-price="16500" data-popular="0">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1542282088-fe5c7a7447f5?auto=format&fit=crop&w=600&q=80" alt="Задний бампер LADA Largus" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Largus'">
+                        <span class="product-badge">Задний бампер</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Largus • (2012-н.в.)</div>
+                        <h3 class="product-name">Задний бампер с защитой "Cross Edition"</h3>
+                        <p class="product-desc">Замена штатного бампера. Интегрированная защита, места под парктроники и фаркоп.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Под покраску</span>
+                            <span class="feature-tag">ОЕМ-крепления</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">16 500 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Largus Cross Rear', 16500)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8: Vesta Front Bumper -->
+                <div class="product-card new" data-model="vesta" data-type="front" data-price="15900" data-popular="1">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80" alt="Бампер LADA Vesta" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Vesta+Front'">
+                        <span class="product-badge">Передний бампер</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Vesta • SW Cross (2017-н.в.)</div>
+                        <h3 class="product-name">Бампер передний "Cross Replica"</h3>
+                        <p class="product-desc">Точная копия заводского обвеса от SW Cross. Совместимость с противотуманными фарами.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Под ПТФ</span>
+                            <span class="feature-tag">ABS-пластик</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">15 900 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Vesta SW Cross Front', 15900)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 9: Granta Spoiler -->
+                <div class="product-card" data-model="granta" data-type="spoiler" data-price="7500" data-popular="0">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1568605117037-7d5dc25a6d57?auto=format&fit=crop&w=600&q=80" alt="Спойлер LADA Granta" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Granta+Spoiler'">
+                        <span class="product-badge">Спойлер</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Granta • Liftback (2014-н.в.)</div>
+                        <h3 class="product-name">Спойлер на крышку багажника "GT Style"</h3>
+                        <p class="product-desc">Спортивный дизайн в стиле гоночных версий. Крепление на штатные места.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Глянец чёрный</span>
+                            <span class="feature-tag">Без сверления</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">7 500 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Granta GT Spoiler', 7500)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 10: Priora Full Kit -->
+                <div class="product-card" data-model="priora" data-type="full" data-price="28000" data-popular="0">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=600&q=80" alt="Обвес LADA Priora" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Priora+Full'">
+                        <span class="product-badge">Полный комплект</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Priora • (2007-2018)</div>
+                        <h3 class="product-name">Полный аэро-комплект "Sport Pack"</h3>
+                        <p class="product-desc">Всё для преображения: бамперы, пороги, спойлер, диффузор. Экономия при покупке комплекта!</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Выгода 15%</span>
+                            <span class="feature-tag">Под покраску</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">28 000 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Priora Full Sport', 28000)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 11: Niva Front Bumper -->
+                <div class="product-card" data-model="niva" data-type="front" data-price="18000" data-popular="1">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1533473429026-8931b27c5c7f?auto=format&fit=crop&w=600&q=80" alt="Бампер LADA Niva" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Niva+Front'">
+                        <span class="product-badge">Передний бампер</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Niva Travel • (2020-н.в.)</div>
+                        <h3 class="product-name">Бампер передний "Urban Style"</h3>
+                        <p class="product-desc">Современный дизайн с интегрированной защитой. Совместимость с лебёдкой и кенгурином.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Под лебёдку</span>
+                            <span class="feature-tag">Стеклопластик</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">18 000 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Niva Urban Front', 18000)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 12: Granta Skirts -->
+                <div class="product-card" data-model="granta" data-type="skirts" data-price="8000" data-popular="0">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80" alt="Пороги LADA Granta" onerror="this.src='https://via.placeholder.com/400x250/1a1a2e/fff?text=LADA+Granta+Skirts'">
+                        <span class="product-badge">Пороги</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-model">Granta • (2011-н.в.)</div>
+                        <h3 class="product-name">Пороги боковые "Sport Line" (пара)</h3>
+                        <p class="product-desc">Подчёркивают спортивный характер. Простая установка на штатные крепления.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">ABS-пластик</span>
+                            <span class="feature-tag">Под покраску</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">8 000 <span>₽</span></div>
+                            <button class="btn-order" onclick="orderProduct('LADA Granta Sport Skirts', 8000)">
+                                Заказать →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Empty State -->
+            <div class="products-empty" id="productsEmpty">
+                <h3>🔍 По вашему запросу ничего не найдено</h3>
+                <p>Попробуйте изменить фильтры или свяжитесь с нами — возможно, нужный обвес доступен под заказ.</p>
+                <a href="https://wa.me/79990000000" class="load-btn" style="margin-top: 20px;">Написать менеджеру</a>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn disabled">←</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">→</button>
+            </div>
+
+            <p class="catalog-note" style="margin-top: 40px; color: rgba(255,255,255,0.7);">
+                💡 Не нашли нужную модель или год выпуска? <strong>Напишите нам</strong> — подберём или изготовим под заказ!
+            </p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section" style="background: var(--card-bg);">
+        <div class="container">
+            <h2 class="section-title" style="color: #fff;">Наши услуги для владельцев LADA</h2>
+            <div class="services-grid">
+                <div class="service-item glass-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Покраска в цвет кузова</h3>
+                    <p>Профессиональная покраска обвесов в любой цвет по каталогу LADA. Используем оригинальные коды красок и материалы премиум-класса.</p>
+                    <div class="service-note">Срок: 2-4 дня • Гарантия на ЛКП 24 месяца</div>
+                </div>
+                <div class="service-item glass-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Профессиональная установка</h3>
+                    <p>Монтаж обвесов в сертифицированном центре. Сохранение гарантии на кузов, аккуратная подгонка, герметизация креплений.</p>
+                    <div class="service-note">Стоимость: от 3 500 ₽ • Запись онлайн</div>
+                </div>
+                <div class="service-item glass-card">
+                    <div class="service-icon">📦</div>
+                    <h3>Доставка по РФ</h3>
+                    <p>Отправляем заказы в любой регион через надёжные ТК. Бережная упаковка, страхование, трекинг-номер.</p>
+                    <div class="service-note">Отправка: Пн/Пт • Самовывоз: г. Владимир</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Delivery & Payment -->
+    <section id="delivery" class="section info-block">
+        <div class="container">
+            <h2 class="section-title" style="color:white;">Оплата и Доставка</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Как заказать?</h3>
+                    <ul>
+                        <li>Выберите товар и нажмите "Заказать"</li>
+                        <li>Менеджер уточнит комплектацию и год авто</li>
+                        <li>Оплата: 100% предоплата (карта/СБП/наличные)</li>
+                        <li>Отправка в течение 1-2 рабочих дней</li>
+                    </ul>
+                </div>
+                <div class="info-item">
+                    <h3>Важно при получении</h3>
+                    <ul>
+                        <li><strong>Осмотр в ТК:</strong> проверьте целостность упаковки</li>
+                        <li><strong>Фотофиксация:</strong> снимите распаковку при повреждениях</li>
+                        <li><strong>Гарантия:</strong> 12 месяцев на заводской брак</li>
+                        <li><strong>Возврат:</strong> возможен в течение 14 дней (товарный вид)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts">
+        <div class="container">
+            <h3>Готовы преобразить вашу LADA?</h3>
+            <p>Свяжитесь с нами для консультации, подбора и оформления заказа.</p>
+            <br>
+            <div class="header-contacts" style="justify-content: center;">
+                <a href="tel:+79990000000" class="phone" style="color: white;">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+            <br><br>
+            <p>&copy; 2023 AutoBodyKits. Все права защищены.</p>
+            <p style="font-size: 0.85rem; opacity: 0.7;">LADA является зарегистрированным товарным знаком. Мы не являемся официальным дилером АО «АВТОВАЗ».</p>
+        </div>
+    </footer>
+
+    <!-- Scripts — ИДЕНТИЧНЫ ОРИГИНАЛУ -->
+    <script>
+        // Фильтрация и сортировка товаров
+        const productsGrid = document.getElementById('productsGrid');
+        const productsEmpty = document.getElementById('productsEmpty');
+        const resultsCount = document.getElementById('resultsCount');
+        const modelFilter = document.getElementById('modelFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const sortButtons = document.querySelectorAll('.filter-btn[data-sort]');
+        
+        let currentSort = 'popular';
+        
+        function filterProducts() {
+            const model = modelFilter.value;
+            const type = typeFilter.value;
+            const cards = document.querySelectorAll('.product-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const cardModel = card.getAttribute('data-model');
+                const cardType = card.getAttribute('data-type');
+                
+                const matchModel = (model === 'all') || (cardModel === model);
+                const matchType = (type === 'all') || (cardType === type);
+                
+                if (matchModel && matchType) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            if (visibleCount === 0) {
+                productsEmpty.classList.add('show');
+                productsGrid.style.display = 'none';
+            } else {
+                productsEmpty.classList.remove('show');
+                productsGrid.style.display = 'grid';
+                sortProducts();
+            }
+            
+            resultsCount.textContent = visibleCount;
+        }
+        
+        function sortProducts() {
+            const cards = Array.from(document.querySelectorAll('.product-card[style*="display: flex"], .product-card:not([style*="display"])'));
+            if (cards.length === 0) return;
+            
+            cards.sort((a, b) => {
+                switch(currentSort) {
+                    case 'new':
+                        const aNew = a.classList.contains('new') ? 1 : 0;
+                        const bNew = b.classList.contains('new') ? 1 : 0;
+                        return bNew - aNew;
+                    case 'price-asc':
+                        return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+                    case 'price-desc':
+                        return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+                    case 'popular':
+                    default:
+                        const aPop = parseInt(a.dataset.popular) || 0;
+                        const bPop = parseInt(b.dataset.popular) || 0;
+                        return bPop - aPop;
+                }
+            });
+            cards.forEach(card => productsGrid.appendChild(card));
+        }
+        
+        modelFilter.addEventListener('change', filterProducts);
+        typeFilter.addEventListener('change', filterProducts);
+        
+        sortButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                sortButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentSort = this.getAttribute('data-sort');
+                sortProducts();
+            });
+        });
+        
+        function orderProduct(name, price) {
+            const message = `Здравствуйте! Интересует товар: ${name}\nЦена: ${price} ₽\nМодель авто: _______\nГод выпуска: _______\n\nНужна покраска? Да/Нет`;
+            const waLink = `https://wa.me/79990000000?text=${encodeURIComponent(message)}`;
+            window.open(waLink, '_blank');
+        }
+        
+        document.querySelectorAll('.page-btn:not(.disabled)').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(!this.classList.contains('disabled')) {
+                    document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    window.scrollTo({ top: 400, behavior: 'smooth' });
+                }
+            });
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            filterProducts();
+        });
+    </script>
+</body>
+</html>
