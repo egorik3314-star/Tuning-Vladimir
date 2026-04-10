@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка и Оплата | AutoBodyKits</title>
+    <link rel="stylesheet" href="Static/Styles/mainstyle.css">
+    <style>
+        /* === Стили страницы Доставки === */
+        .delivery-page {
+            background: #0b0e11;
+            color: #e0e0e0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 12px 0;
+            background: rgba(22,27,34,0.95);
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .breadcrumb a { color: #e74c3c; transition: 0.2s; text-decoration: none; }
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        .breadcrumb span { color: #555; margin: 0 5px; }
+
+        /* Hero */
+        .delivery-hero {
+            height: auto;
+            min-height: 280px;
+            padding: 80px 0 50px;
+            background: linear-gradient(135deg, rgba(11,14,17,0.95), rgba(22,27,34,0.98)),
+                        radial-gradient(circle at 80% 20%, rgba(231,76,60,0.1) 0%, transparent 50%);
+            text-align: center;
+        }
+        .delivery-hero h1 { font-size: 2.5rem; color: #fff; margin-bottom: 15px; }
+        .delivery-hero p { font-size: 1.15rem; color: rgba(255,255,255,0.85); max-width: 650px; margin: 0 auto; line-height: 1.6; }
+
+        /* Key Conditions Cards */
+        .conditions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 2;
+        }
+        .condition-card {
+            background: #161b22;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .condition-card:hover {
+            transform: translateY(-5px);
+            border-color: #e74c3c;
+            box-shadow: 0 15px 35px rgba(231,76,60,0.15);
+        }
+        .condition-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(231,76,60,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 15px;
+        }
+        .condition-card h3 { color: #fff; font-size: 1.3rem; margin: 0 0 10px; }
+        .condition-card p { color: rgba(255,255,255,0.75); margin: 0; line-height: 1.5; }
+        .condition-highlight { color: #e74c3c; font-weight: 600; }
+
+        /* Process Section */
+        .process-section { padding: 70px 0 50px; }
+        .section-title { text-align: center; color: #fff; font-size: 2rem; margin-bottom: 40px; }
+        .steps-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            position: relative;
+        }
+        .step-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #e74c3c;
+            color: #fff;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .step-title { color: #fff; font-size: 1.1rem; margin-bottom: 8px; }
+        .step-desc { color: rgba(255,255,255,0.65); font-size: 0.9rem; line-height: 1.5; }
+
+        /* Transport & Packaging */
+        .info-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 50px 0;
+        }
+        .info-block-card {
+            background: #161b22;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .info-block-card h3 { color: #fff; margin-bottom: 15px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        .info-block-card ul { list-style: none; padding: 0; margin: 0; }
+        .info-block-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .info-block-card ul li:last-child { border-bottom: none; }
+        .info-block-card ul li::before { content: "•"; color: #e74c3c; font-weight: bold; margin-top: 2px; }
+        .tk-logos { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
+        .tk-badge {
+            background: rgba(255,255,255,0.08);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #ccc;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Warning / Important */
+        .warning-box {
+            background: rgba(231,76,60,0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+        .warning-box h4 { color: #fff; margin: 0 0 10px; font-size: 1.2rem; }
+        .warning-box p { color: rgba(255,255,255,0.85); margin: 0 0 10px; line-height: 1.5; }
+        .warning-box strong { color: #e74c3c; }
+
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #161b22, #1c2230);
+            border: 1px solid rgba(231,76,60,0.3);
+            border-radius: 14px;
+            padding: 40px 30px;
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+        .cta-box h2 { color: #fff; margin-bottom: 15px; }
+        .cta-box p { color: rgba(255,255,255,0.8); margin-bottom: 25px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-primary { background: #e74c3c; color: #fff; padding: 12px 25px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary:hover { background: #c0392b; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(231,76,60,0.3); }
+        .btn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 25px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: 0.3s; }
+        .btn-outline:hover { border-color: #e74c3c; color: #e74c3c; }
+
+        /* Mobile */
+        @media (max-width: 992px) {
+            .info-split { grid-template-columns: 1fr; }
+            .conditions-grid { margin-top: 0; }
+        }
+        @media (max-width: 768px) {
+            .delivery-hero h1 { font-size: 1.9rem; }
+            .delivery-hero p { font-size: 1rem; }
+            .steps-timeline { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .steps-timeline { grid-template-columns: 1fr; }
+            .condition-card { padding: 20px; }
+            .cta-buttons { flex-direction: column; }
+            .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body class="delivery-page">
+
+    <!-- Header -->
+    <header>
+        <div class="container header-wrap">
+            <div class="logo">Auto<span>Body</span>Kits</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="Catalog.html">Каталог</a></li>
+                    <li><a href="Services.html">Услуги</a></li>
+                    <li><a href="Delivery.html" class="active">Доставка</a></li>
+                    <li><a href="index.html#request-form">Заявка</a></li>
+                    <li><a href="Contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="header-contacts">
+                <a href="tel:+79990000000" class="phone">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Главная</a> <span>/</span> <strong>Доставка и оплата</strong>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero delivery-hero">
+        <div class="container">
+            <h1>Условия доставки и оплаты</h1>
+            <p>Честные условия, прозрачные сроки и бережная отправка. Работаем по всей России с гарантией сохранности груза.</p>
+        </div>
+    </section>
+
+    <!-- Key Conditions -->
+    <section class="container">
+        <div class="conditions-grid">
+            <div class="condition-card">
+                <div class="condition-icon">💳</div>
+                <h3>Оплата заказа</h3>
+                <p>Работаем по <span class="condition-highlight">100% предоплате</span>. После поступления средств заказ сразу передаётся в обработку.</p>
+            </div>
+            <div class="condition-card">
+                <div class="condition-icon">📅</div>
+                <h3>Дни отправки</h3>
+                <p>Грузы отправляются строго <span class="condition-highlight">понедельник и пятницу</span>. Заказы, оплаченные до 14:00, уходят в ближайший день отправки.</p>
+            </div>
+            <div class="condition-card">
+                <div class="condition-icon">🚚</div>
+                <h3>Способ получения</h3>
+                <p><span class="condition-highlight">Транспортные компании</span> по всей РФ или <span class="condition-highlight">самовывоз</span> со склада в г. Владимир.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="section-title">Как проходит доставка</h2>
+            <div class="steps-timeline">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <h3 class="step-title">Подбор и оплата</h3>
+                    <p class="step-desc">Менеджер уточняет наличие, формирует счёт. Вы вносите 100% предоплату удобным способом.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <h3 class="step-title">Упаковка и проверка</h3>
+                    <p class="step-desc">Детали бережно упаковываются, проходит фото-контроль целостности перед передачей в ТК.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <h3 class="step-title">Отправка (Пн/Пт)</h3>
+                    <p class="step-desc">Груз передаётся в выбранную ТК. В тот же день высылаем вам трек-номер и накладную.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">4</div>
+                    <h3 class="step-title">Получение</h3>
+                    <p class="step-desc">Забираете груз в пункте ТК или наш курьер привозит его по адресу (для Владимира/области).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transport & Packaging -->
+    <section class="container">
+        <div class="info-split">
+            <div class="info-block-card">
+                <h3>📦 Транспортные компании</h3>
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px;">Работаем с проверенными перевозчиками, обеспечивающими бережную транспортировку крупногабаритных автозапчастей.</p>
+                <div class="tk-logos">
+                    <span class="tk-badge">СДЭК</span>
+                    <span class="tk-badge">Деловые Линии</span>
+                    <span class="tk-badge">ПЭК</span>
+                    <span class="tk-badge">КИТ</span>
+                    <span class="tk-badge">Энергия</span>
+                    <span class="tk-badge">Байкал Сервис</span>
+                </div>
+                <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 15px;">📍 Доставка до терминала ТК в вашем городе рассчитывается индивидуально. Стоимость обычно 800–2500 ₽ в зависимости от региона.</p>
+            </div>
+            <div class="info-block-card">
+                <h3>🛡️ Упаковка и страхование</h3>
+                <ul>
+                    <li>Многослойная защита: пенофол + гофрокартон + стрейч-плёнка</li>
+                    <li>Жёсткие распорки для спойлеров и диффузоров</li>
+                    <li>Маркировка "Хрупкое" и "Не кантовать"</li>
+                    <li>Все грузы застрахованы на полную стоимость заказа</li>
+                    <li>Фото-отчёт упаковки отправляется вам до передачи в ТК</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Warning Box -->
+        <div class="warning-box">
+            <h4>⚠️ Важно при получении</h4>
+            <p>Обвесы — крупногабаритный товар. <strong>Обязательно осматривайте упаковку и содержимое в присутствии сотрудника ТК.</strong></p>
+            <p>При обнаружении повреждений, трещин или сколов:</p>
+            <ul style="color: rgba(255,255,255,0.85); padding-left: 20px; margin: 5px 0 0;">
+                <li>Не подписывайте акт приёма без пометки "Груз повреждён"</li>
+                <li>Составьте акт о повреждении прямо в терминале</li>
+                <li>Сделайте фото/видео упаковки и деталей</li>
+                <li>Свяжитесь с нами в течение 24 часов — мы решим вопрос за свой счёт</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="container">
+        <div class="cta-box">
+            <h2>Остались вопросы по доставке?</h2>
+            <p>Напишите нам — рассчитаем точную стоимость доставки до вашего города, подберём оптимальную ТК и согласуем день отправки.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/79990000000?text=Здравствуйте!%20Хочу%20узнать%20стоимость%20доставки%20обвеса%20в%20моё%20город." class="btn-primary">💬 Написать в WhatsApp</a>
+                <a href="tel:+79990000000" class="btn-primary">📞 Позвонить менеджеру</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts">
+        <div class="container">
+            <h3>AutoBodyKits</h3>
+            <p>Профессиональные аэродинамические обвесы. Покраска. Установка.</p>
+            <br>
+            <div class="header-contacts" style="justify-content: center;">
+                <a href="tel:+79990000000" class="phone" style="color: white;">+7 (999) 000-00-00</a>
+                <a href="https://wa.me/79990000000" class="load-btn">WhatsApp</a>
+                <a href="https://t.me/username" class="load-btn tg">Telegram</a>
+            </div>
+            <br><br>
+            <p>&copy; 2023 AutoBodyKits. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
